@@ -1,0 +1,103 @@
+name: SimilarRepos
+extName: SimilarRepos - AI 驱动的 GitHub 仓库智能推荐
+extDescription: 借助 AI 的强大能力，在您访问 GitHub 页面时自动推荐相似且有趣的仓库，助您发现优质开源项目
+
+navitems:
+  home: 基础
+  model: 模型
+  prompt: 提示词
+
+options:
+  general:
+    title: 常规设置
+    description: 配置扩展的常规设置
+    enableExtension: 启用扩展
+    similarReposCount: 推荐仓库数量
+  model:
+    title: 模型设置
+    description: 配置AI模型设置
+    customModels: 自定义模型
+  prompt:
+    title: 提示设置
+    description: 配置提示模板
+    editPrompt: 编辑 Prompt
+    customizePrompt: 自定义用于推荐相似仓库的 Prompt
+    supportedVariables: 支持以下变量：
+    repoId: 仓库名称
+    repoCount: 要推荐的Repo 数量
+    placeholder: 输入自定义 Prompt...
+    resetToDefault: 重置为默认
+    save: 保存
+  provider:
+    label: 已选模型
+    addCustomModelsHelp: 点击“添加模型”以添加自定义模型
+    manageConfigurations:
+      title: 管理配置
+      description: 添加、编辑和测试您的 AI 模型配置
+      noConfigs: 未找到模型配置
+      noConfigsHelp: 点击“添加模型”创建您的第一个模型配置
+      addConfig: 添加模型
+    configDialog:
+      title:
+        edit: 编辑模型配置
+        create: 添加模型配置
+      cancel: 取消
+      submit:
+        edit: 更新
+        create: 添加
+      test:
+        title: 测试模型配置以确保其工作正常
+        button: 测试连接
+        testing: 测试中...
+        success: 连接成功
+        failed: 连接失败
+        request: '请求:'
+        response: '响应:'
+    fields:
+      provider: 提供商
+      configurationName: 自定义模型名称
+      model: 模型
+      selectProviderFirst: 请先选择提供商
+      apiKey: API Key
+      apiBaseUrl: API Base URL
+      customModel: 输入自定义模型 ID
+      placeholders:
+        configurationName: 输入自定义模型名称
+        apiKey: 输入您的 API Key
+        apiBaseUrl: 输入您的 API Base URL
+        selectProvider: 选择提供商
+        selectModel: 选择模型
+        customModel: 输入自定义模型名称
+    validation:
+      required: 必填
+    alert:
+      deleteConfirm: 您确定要删除此模型配置吗？
+    status:
+      configured: 已配置
+      notConfigured: 未配置
+      testing: 测试中...
+      test: 测试
+    configCard:
+      active: 当前使用的模型配置
+      edit: 编辑
+      delete: 删除
+      noApiKey: 无 API Key
+    activeConfig:
+      title: 当前已选的自定义模型配置
+      provider: '提供商:'
+      model: '模型:'
+      apiKey: 'API Key:'
+      endpoint: 'API Base URL:'
+  header:
+    title: SimilarRepos
+
+host:
+  similarRepos:
+    header:
+      title: 推荐仓库
+      refresh: 换一批
+      settings: 设置
+    content:
+      noRepos: 暂无推荐仓库
+      loading: 加载中...
+      noDescription: 暂无描述

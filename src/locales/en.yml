@@ -1,0 +1,103 @@
+name: SimilarRepos
+extName: SimilarRepos - AI-Powered Repository Recommendations for GitHub
+extDescription: Use the power of AI to automatically recommend similar and interesting repositories directly on any GitHub page you visit.
+
+navitems:
+  home: Basic
+  model: Model
+  prompt: Prompt
+
+options:
+  general:
+    title: General Settings
+    description: Configure general extension settings
+    enableExtension: Enable Extension
+    similarReposCount: Number of Similar Repositories to Recommend
+  model:
+    title: Model Settings
+    description: Configure AI model settings
+    customModels: Custom Models
+  prompt:
+    title: Prompt Settings
+    description: Configure prompt templates
+    editPrompt: Edit Prompt
+    customizePrompt: Customize the prompt used for recommending similar repositories
+    supportedVariables: 'Supported variables:'
+    repoId: Repository name
+    repoCount: Number of repositories to recommend
+    placeholder: Enter custom prompt...
+    resetToDefault: Reset to Default
+    save: Save
+  provider:
+    label: Selected Model
+    addCustomModelsHelp: Click 'Add Model' to add custom model
+    manageConfigurations:
+      title: Manage Configurations
+      description: Add, edit, and test your AI model configurations
+      noConfigs: No model configurations found
+      noConfigsHelp: Click "Add Model" to create your first model configuration
+      addConfig: Add Model
+    configDialog:
+      title:
+        edit: Edit Model Configuration
+        create: Add Model Configuration
+      cancel: Cancel
+      submit:
+        edit: Update
+        create: Add
+      test:
+        title: Test your model configuration to ensure it works correctly
+        button: Test Connection
+        testing: Testing...
+        success: Connection successful
+        failed: Connection failed
+        request: 'Request:'
+        response: 'Response:'
+    fields:
+      provider: Provider
+      configurationName: Custom Model Name
+      model: Model
+      selectProviderFirst: Select a provider first
+      apiKey: API Key
+      apiBaseUrl: API Base URL
+      customModel: Input custom model ID
+      placeholders:
+        configurationName: Enter custom model name
+        apiKey: Enter your API key
+        apiBaseUrl: Enter your API Base Url
+        selectProvider: Select a provider
+        selectModel: Select a model
+        customModel: Enter custom model name
+    validation:
+      required: '*'
+    alert:
+      deleteConfirm: Are you sure you want to delete this model configuration?
+    status:
+      configured: Configured
+      notConfigured: Not Configured
+      testing: Testing...
+      test: Test
+    configCard:
+      active: Active model configuration
+      edit: Edit
+      delete: Delete
+      noApiKey: No API Key
+    activeConfig:
+      title: Currently Selected Custom Model Configuration
+      provider: 'Provider:'
+      model: 'Model:'
+      apiKey: 'API Key:'
+      endpoint: 'API Base URL:'
+  header:
+    title: SimilarRepos
+
+host:
+  similarRepos:
+    header:
+      title: Similar Repositories
+      refresh: Refresh
+      settings: Settings
+    content:
+      noRepos: No similar repositories
+      loading: Loading...
+      noDescription: No description
