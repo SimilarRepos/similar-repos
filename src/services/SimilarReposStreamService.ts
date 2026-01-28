@@ -45,6 +45,8 @@ export class SimilarReposStreamService {
         element: z.object({
           repoUrl: z.string().describe('Full GitHub URL'),
           repoDesc: z.string().describe('Reason for recommendation'),
+          repoStars: z.string().describe('The current number of stars for this repository'),
+          repoForks: z.string().describe('The current number of forks for this repository'),
         }),
       }),
       messages,

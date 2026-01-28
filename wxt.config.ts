@@ -49,8 +49,8 @@ export default defineConfig({
         id: 'similar-repos@robby',
         strict_min_version: '88.0',
         data_collection_permissions: {
-          "required": ["none"]
-        }
+          required: ['none'],
+        },
       },
     },
     ...(browser === 'firefox' && {

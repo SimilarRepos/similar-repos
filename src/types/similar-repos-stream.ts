@@ -9,6 +9,8 @@ export interface SimilarReposStreamRequest {
 export interface SimilarReposStreamItem {
   repoUrl: string
   repoDesc: string
+  repoStars: string
+  repoForks: string
 }
 
 export interface SimilarReposStreamResponse {

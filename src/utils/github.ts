@@ -227,6 +227,8 @@ export function convertToRepositories(
           name: repoInfo.name,
           description: item.repoDesc,
           url: item.repoUrl,
+          starts: item.repoStars,
+          froks: item.repoForks,
         }
       }
       return null
@@ -237,8 +239,8 @@ export function convertToRepositories(
     name: repo.name,
     owner: repo.owner,
     description: repo.description,
-    stars: 0,
-    forks: 0,
+    stars: Number.isNaN(repo.starts) ? 0 : Number.parseInt(repo.starts),
+    forks: Number.isNaN(repo.froks) ? 0 : Number.parseInt(repo.froks),
     url: repo.url,
   }))
 }
