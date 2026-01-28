@@ -2,6 +2,10 @@
 
 **Use the power of AI to automatically recommend similar and interesting repositories directly on any GitHub page you visit.**
 
+
+https://github.com/user-attachments/assets/93c2625a-1cac-448c-9275-312a59656034
+
+
 ## ✨ Features
 
 - **Smart Discovery**: Automatically displays similar projects on the GitHub repository sidebar.
