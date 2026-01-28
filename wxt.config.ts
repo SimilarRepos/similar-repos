@@ -48,6 +48,9 @@ export default defineConfig({
       gecko: {
         id: 'similar-repos@robby',
         strict_min_version: '88.0',
+        data_collection_permissions: {
+          "required": ["none"]
+        }
       },
     },
     ...(browser === 'firefox' && {
