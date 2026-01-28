@@ -7,7 +7,6 @@ interface OptionsHeaderProps {
 
 export function OptionsHeader({ className }: OptionsHeaderProps) {
   const handleClick = () => {
-    // Navigate to options homepage using hash router
     window.location.hash = '#/'
   }
 

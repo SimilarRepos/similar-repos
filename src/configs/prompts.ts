@@ -46,7 +46,6 @@ export async function buildPrompt(
 
   return JSON.stringify(
     Object.entries(params).reduce((prompt, [key, value]) => {
-      // Handle array parameters by converting to a formatted string
       let replacementValue = value
       if (Array.isArray(value)) {
         if (value.length === 0) {

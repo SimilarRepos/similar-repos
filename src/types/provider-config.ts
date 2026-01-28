@@ -13,7 +13,7 @@ export interface ProviderInfo {
   id: ModelProvider
   name: string
   description: string
-  icon: string // emoji or icon class
+  icon: string
   defaultBaseUrl?: string
   requiresBaseUrl: boolean
   models: ModelInfo[]

@@ -11,7 +11,6 @@ export const CLIENT_CREATOR_MAPPER = {
     fetch: async (url: string, options: Record<string, any>) => {
       if (options?.body) {
         const body = JSON.parse(options.body as string)
-        // 暂时无法通过ai-sdk 添加此参数，只对豆包模型添加 thinking 参数
         if (body.model && body.model.includes('doubao')) {
           Object.assign(body, { thinking: { type: 'disabled' } })
         }

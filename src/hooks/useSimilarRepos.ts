@@ -50,7 +50,6 @@ export function useSimilarRepos(): UseSimilarReposResult {
     setLoading(true)
     setError(null)
     setRepos(DEFAULT_REPOS)
-    // Clear stats cache when fetching new repos
     statsCacheRef.current.clear()
 
     try {
@@ -73,12 +72,10 @@ export function useSimilarRepos(): UseSimilarReposResult {
             return !statsCacheRef.current.has(key)
           })
 
-          // Only fetch stats if there are repos that need them
           if (reposNeedingStats.length > 0) {
             const statsMap = await getBatchRepoStats(
               reposNeedingStats.map(r => ({ owner: r.owner, name: r.name })),
             )
-            // Update cache with new stats
             statsMap.forEach((stats, key) => {
               statsCacheRef.current.set(key, stats)
             })

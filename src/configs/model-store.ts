@@ -41,7 +41,6 @@ const storageAdapter = {
   },
 }
 
-// 写入配置 Atom
 const writeModelConfigAtom = atom(
   null,
   async (get, set, patch: Partial<ModelConfigs>) => {
@@ -67,14 +66,12 @@ const writeModelConfigAtom = atom(
         arrayMerge: overwriteMerge,
       }) as ModelConfigs
 
-      // 更新版本号
       next.version = (baseConfig.version || 1) + 1
 
       set(modelConfigAtom, next)
       await storageAdapter.set(MODEL_CONFIG_STORAGE_KEY, next)
     }
     else {
-      // 备用方案
       const currentConfig = get(modelConfigAtom)
       const next = deepmerge(currentConfig, patch, {
         arrayMerge: overwriteMerge,
@@ -107,8 +104,6 @@ modelConfigAtom.onMount = (setAtom: (newValue: ModelConfigs) => void) => {
 
   return unwatch
 }
-
-// ==================== 派生 Atoms ====================
 
 export const modelsAtom = atom(
   get => get(modelConfigAtom).data.models,
@@ -151,8 +146,6 @@ export const enabledModelsAtom = atom((get) => {
   return models.filter(m => m.enabled)
 })
 
-// ==================== 便捷操作 Atoms ====================
-
 export const configEnabledAtom = atom(
   get => get(modelConfigAtom).data.enabled,
   async (get, set, enabled: boolean) => {
@@ -182,7 +175,6 @@ export const configSimilarCountAtom = atom(
 export const customPromptAtom = atom<string>('')
 customPromptAtom.onMount = (setAtom) => {
   storageAdapter.get<string>(STORAGE_KEYS.CUSTOM_PROMPT, '').then((prompt) => {
-    // 如果没有自定义 prompt，使用默认 prompt
     if (!prompt) {
       setAtom(promptTemplates.recommendRepos || '')
     }
@@ -245,7 +237,6 @@ export const deleteModelAtom = atom(null, async (get, set, id: string) => {
   const filtered = models.filter(m => m.id !== id)
   await set(modelsAtom, filtered)
 
-  // 如果删除的是激活模型，清空激活状态
   const activeId = get(activeModelIdAtom)
   if (activeId === id) {
     await set(writeActiveModelIdAtom, '')

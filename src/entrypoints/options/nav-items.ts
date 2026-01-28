@@ -14,7 +14,6 @@ export interface NavItem {
 
 export type NavItems = NavItem[]
 
-// Menu items.
 const NAV_ITEMS = [
   {
     title: `${i18n.t('navitems.home')}`,

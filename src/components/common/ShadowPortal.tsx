@@ -5,8 +5,8 @@ import themeCss from '@/assets/tailwind/theme.css?inline'
 import { useElement } from '@/hooks/useElement'
 
 interface Props {
-  selector: string // 宿主选择器
-  className?: string // 注入容器的类名
+  selector: string
+  className?: string
   position?: 'prepend' | 'append'
   injetStyle?: boolean
   rootClassName?: string
@@ -48,7 +48,6 @@ export const ShadowPortal: React.FC<Props> = ({
       shadow.appendChild(style)
     }
 
-    // 挂载
     if (position === 'prepend') {
       targetElement.insertBefore(host, targetElement.firstChild)
     }
@@ -67,7 +66,7 @@ export const ShadowPortal: React.FC<Props> = ({
     return null
 
   return createPortal(
-    <div className={`sr-portal-root ${rootClassName}`} {...rest}>
+    <div className={`similar-repos-portal-root ${rootClassName}`} {...rest}>
       {children}
     </div>,
     shadowRoot as unknown as Element,

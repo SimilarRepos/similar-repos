@@ -30,7 +30,6 @@ export function ConfigDialog() {
   const [form, setForm] = useState<FormData>(initialForm)
   const { testing, result, test, reset } = useTestConnection()
 
-  // Initialize form when dialog opens
   useEffect(() => {
     if (isOpen) {
       setForm(config ? formFromConfig(config) : initialForm)

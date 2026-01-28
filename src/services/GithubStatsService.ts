@@ -1,5 +1,4 @@
 import { LRUCache } from 'lru-cache'
-// src/services/githubStatsService.ts
 import { logger } from '@/utils/logger'
 
 interface RepoStats {
@@ -47,7 +46,6 @@ async function fetchRepoStatsFromHTML(
     const parser = new DOMParser()
     const doc = parser.parseFromString(html, 'text/html')
 
-    // 提取 stars
     let stars = 0
     const starsSelectors = [
       '#repo-stars-counter-star',
@@ -69,7 +67,6 @@ async function fetchRepoStatsFromHTML(
       }
     }
 
-    // 提取 forks
     let forks = 0
     const forksSelectors = [
       '#repo-network-counter',
@@ -90,7 +87,6 @@ async function fetchRepoStatsFromHTML(
       }
     }
 
-    // 提取描述
     let description = ''
     const descSelectors = [
       'p[class*="f4"]',

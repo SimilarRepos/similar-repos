@@ -13,7 +13,6 @@ export class TestModelService {
       },
     ]
 
-    // 已有 id
     if (request.configId) {
       const [model, providerOptions] = await createLanguageModel(
         request.configId,

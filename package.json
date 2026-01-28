@@ -1,7 +1,7 @@
 {
   "name": "similar-repos",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Similar Repositories for Github by AI",
   "scripts": {
@@ -13,8 +13,8 @@
     "build:firefox": "wxt build -b firefox",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format": "eslint --fix",
+    "format:check": "eslint",
     "postinstall": "wxt prepare",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
@@ -75,7 +75,6 @@
     "eslint-plugin-react-refresh": "^0.4.26",
     "postcss": "^8.5.6",
     "postcss-rem-to-responsive-pixel": "^7.0.0",
-    "prettier": "^3.8.1",
     "tailwindcss": "^4.1.18",
     "terser": "^5.46.0",
     "typescript": "^5.9.3",

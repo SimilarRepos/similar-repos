@@ -1,4 +1,4 @@
-const isDev = true // import.meta.env.DEV
+const isDev = true
 
 const ansi = {
   reset: '\x1B[0m',

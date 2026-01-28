@@ -34,8 +34,6 @@ export function ModelSelector({
     return !models.some(model => model.id === value)
   }, [value, models])
 
-  // 用 isCustomModel 初始化勾选状态
-  // 用 useCustomModel 保存勾选状态
   const [useCustomModel, setUseCustomModel] = useState(isCustomModel)
 
   return (
@@ -86,7 +84,6 @@ export function ModelSelector({
           onCheckedChange={(checked) => {
             setUseCustomModel(checked as boolean)
             if (!checked) {
-              // Reset to first available model when unchecking
               onChange(models[0]?.id || '')
             }
           }}

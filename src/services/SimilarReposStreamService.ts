@@ -58,8 +58,7 @@ export class SimilarReposStreamService {
     for await (const partialOutput of partialOutputStream) {
       logger.log('Recieved LLM partialOutput', partialOutput)
       if (partialOutput.length > lastOutput.length) {
-        // Yield only the new items
-        for (let i = lastOutput.length; i < partialOutput.length; i++) {
+        for (let i = lastOutput.length; i < partialOutput.length; i++) { // Yield only the new items
           yield partialOutput[i] as SimilarReposStreamItem
         }
         lastOutput = [...partialOutput]

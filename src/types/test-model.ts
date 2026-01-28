@@ -6,7 +6,7 @@ export interface TestConnConfig {
 }
 
 export interface TestConnRequest {
-  configId?: string // 配置已被保存，有 id 时，直接传递 id 即可
+  configId?: string
   config?: TestConnConfig
 }
 

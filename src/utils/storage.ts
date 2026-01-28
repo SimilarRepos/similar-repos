@@ -6,7 +6,6 @@ import type {
 import { storage } from '#imports'
 import { STORAGE_KEYS } from '../configs/constants'
 
-// ====== 用于在 backend script 读取配置 =====
 export async function getModelConfigs(): Promise<ModelConfigData['models']> {
   const config = await storage.getItem<ModelConfigs>(
     `local:${STORAGE_KEYS.MODEL_CONFIGS}`,
