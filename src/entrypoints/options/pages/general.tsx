@@ -14,8 +14,8 @@ export default function GeneralPage() {
   const [similarCount, setSimilarCount] = useAtom(configSimilarCountAtom)
 
   const handleSimilarCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number.parseInt(e.target.value, 10)
-    if (!Number.isNaN(value) && value >= 1 && value <= 10) {
+    const value = Number.parseInt(e.target.value)
+    if (!Number.isNaN(value) && value >= 1 && value <= 1000) {
       setSimilarCount(value)
     }
   }
@@ -35,7 +35,7 @@ export default function GeneralPage() {
         <Input
           type="number"
           min="1"
-          max="10"
+          max="1000"
           value={similarCount}
           onChange={handleSimilarCountChange}
           className="w-20 h-8 text-center"
