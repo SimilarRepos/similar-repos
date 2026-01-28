@@ -25,6 +25,12 @@ options:
     supportedVariables: 支持以下变量：
     repoId: 仓库名称
     repoCount: 要推荐的Repo 数量
+    repoDesc: 仓库描述
+    repoLanguage: 主要编程语言
+    repoTopics: 仓库主题/标签
+    repoStars: Star 数量
+    repoForks: Fork 数量
+    repoReadMe: README 内容预览
     placeholder: 输入自定义 Prompt...
     resetToDefault: 重置为默认
     save: 保存

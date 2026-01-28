@@ -1,3 +1,4 @@
+import type { GitHubRepoInfo } from '@/types/github'
 import type { SimilarReposStreamItem } from '@/types/similar-repos-stream'
 import { Output, streamText } from 'ai'
 import { z } from 'zod'
@@ -7,7 +8,7 @@ import { createLanguageModel } from '@/utils/model.'
 
 export class SimilarReposStreamService {
   public async* generate(
-    repoId: string,
+    repoInfo: GitHubRepoInfo,
     count: number,
     excludeRepoIds?: string[],
   ): AsyncGenerator<SimilarReposStreamItem, void, unknown> {
@@ -25,7 +26,13 @@ export class SimilarReposStreamService {
       {
         role: 'user' as const,
         content: await buildPrompt('recommendRepos', {
-          repoId,
+          repoId: repoInfo.id,
+          repoDesc: repoInfo.description,
+          repoLanguage: repoInfo.language,
+          repoTopics: repoInfo.topics,
+          repoReadMe: repoInfo.readme,
+          repoStars: repoInfo.stars,
+          repoForks: repoInfo.forks,
           repoCount: count,
           excludeRepos: excludeRepoIds || [],
         }),

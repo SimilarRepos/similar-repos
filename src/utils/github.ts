@@ -1,5 +1,141 @@
-import type { Repository } from '@/types/github'
+import type { GitHubRepoInfo, Repository } from '@/types/github'
 import type { SimilarReposStreamItem } from '@/types/similar-repos-stream'
+import { logger } from './logger'
+
+const DOM_SELECTORS = {
+  description: [
+    '[data-pjax="#repo-content-pjax-container"] .f4.my-3',
+    '.BorderGrid-cell .f4.my-3',
+    '[itemprop="about"]',
+    'p.f4.my-3',
+  ],
+  language: [
+    '.BorderGrid-cell ul.list-style-none li:first-child a .text-bold',
+  ],
+  topics: [
+    '[data-test-selector="topics-list"] a',
+    '.topic-tag',
+    '.list-topics a',
+  ],
+  stars: [
+    '#repo-stars-counter-star',
+    'a[href$="/stargazers"] strong',
+    '[href$="/stargazers"] .Counter',
+  ],
+  forks: [
+    '#repo-network-counter',
+    'a[href$="/forks"] strong',
+    'a[href$="/network/members"] strong',
+  ],
+  license: [
+    '.BorderGrid-cell a[href*="LICENSE"]',
+    '.BorderGrid-cell a[href*="license"]',
+    '[itemprop="license"]',
+  ],
+  readme: [
+    'article[itemprop="text"]',
+    '[data-testid="readme"] article',
+    '#readme article',
+    '.markdown-body',
+    'article.markdown-body',
+  ],
+} as const
+
+function extractTextFromSelectors(selectors: readonly string[]): string {
+  for (const selector of selectors) {
+    const element = document.querySelector(selector)
+    const text = element?.textContent?.trim()
+    if (text) {
+      return text
+    }
+  }
+  return ''
+}
+
+function extractNumber(text: string): number {
+  const cleanText = text.replace(/[,\s]/g, '')
+  const parsed = Number.parseInt(cleanText, 10)
+  return Number.isNaN(parsed) ? 0 : parsed
+}
+
+function extractNumberFromSelectors(selectors: readonly string[]): number {
+  for (const selector of selectors) {
+    const element = document.querySelector(selector)
+    if (element) {
+      const text = element.getAttribute('title') || element.textContent || '0'
+      const number = extractNumber(text)
+      if (number > 0) {
+        return number
+      }
+    }
+  }
+  return 0
+}
+
+function extractTopics(selectors: readonly string[]): string[] {
+  const topics: string[] = []
+  const topicSet = new Set<string>()
+
+  for (const selector of selectors) {
+    const elements = document.querySelectorAll(selector)
+    elements.forEach((element) => {
+      const topic = element.textContent?.trim()
+      if (topic && !topicSet.has(topic)) {
+        topicSet.add(topic)
+        topics.push(topic)
+      }
+    })
+
+    if (topics.length > 0) {
+      break
+    }
+  }
+
+  return topics
+}
+
+function extractReadme(
+  selectors: readonly string[],
+  options: { maxParagraphs?: number, maxChars?: number } = {},
+): string | undefined {
+  const { maxParagraphs = 10, maxChars = 2000 } = options
+
+  for (const selector of selectors) {
+    const readmeElement = document.querySelector(selector)
+
+    if (readmeElement) {
+      const paragraphs = Array.from(readmeElement.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li'))
+        .map(el => el.textContent?.trim())
+        .filter(text => text && text.length > 0)
+        .slice(0, maxParagraphs)
+
+      if (paragraphs.length > 0) {
+        let readme = paragraphs.join('\n\n')
+
+        if (readme.length > maxChars) {
+          readme = `${readme.slice(0, maxChars)}...`
+        }
+
+        return readme
+      }
+
+      const fullText = readmeElement.textContent?.trim()
+      if (fullText) {
+        const lines = fullText.split('\n')
+          .map(line => line.trim())
+          .filter(line => line.length > 0)
+          .slice(0, maxParagraphs)
+          .join('\n')
+
+        return lines.length > maxChars
+          ? `${lines.slice(0, maxChars)}...`
+          : lines
+      }
+    }
+  }
+
+  return undefined
+}
 
 export function extractRepoFromUrl(
   url: string,
@@ -13,10 +149,8 @@ export function extractRepoFromUrl(
       const pathname = urlObj.pathname.slice(1)
       const parts = pathname.split('/')
 
-      // GitHub repo URLs have format: /owner/name
       if (parts.length >= 2) {
         const [owner, name] = parts
-        // Filter out invalid characters and common non-repo paths
         if (
           owner
           && name
@@ -29,7 +163,6 @@ export function extractRepoFromUrl(
       }
     }
     else {
-      // Handle pathname only (e.g., /facebook/react)
       const cleanPath = url.startsWith('/') ? url.slice(1) : url
       const parts = cleanPath.split('/')
 
@@ -48,10 +181,6 @@ export function extractRepoFromUrl(
   return null
 }
 
-export function getCurrentRepo(): { owner: string, name: string } | null {
-  return extractRepoFromUrl(window.location.href)
-}
-
 export function formatRepoId(owner: string, name: string): string {
   return `${owner}/${name}`
 }
@@ -59,28 +188,36 @@ export function formatRepoId(owner: string, name: string): string {
 export function areReposEqual(a: Repository[], b: Repository[]): boolean {
   if (a.length !== b.length)
     return false
+
   return a.every((repo, index) => {
     const other = b[index]
     if (!other)
       return false
-    return repo.owner === other.owner
+
+    return (
+      repo.owner === other.owner
       && repo.name === other.name
       && repo.description === other.description
       && repo.stars === other.stars
       && repo.forks === other.forks
       && repo.url === other.url
+    )
   })
 }
 
 export function areStringArraysEqual(a: string[], b: string[]): boolean {
   if (a.length !== b.length)
     return false
+
   const sortedA = [...a].sort()
   const sortedB = [...b].sort()
+
   return sortedA.every((str, index) => str === sortedB[index])
 }
 
-export function convertToRepositories(items: SimilarReposStreamItem[]): Repository[] {
+export function convertToRepositories(
+  items: SimilarReposStreamItem[],
+): Repository[] {
   const basicRepos = items
     .map((item) => {
       const repoInfo = extractRepoFromUrl(item.repoUrl)
@@ -104,4 +241,54 @@ export function convertToRepositories(items: SimilarReposStreamItem[]): Reposito
     forks: 0,
     url: repo.url,
   }))
+}
+
+export function extractRepoInfoFromDOM(options?: {
+  maxReadmeParagraphs?: number
+  maxReadmeChars?: number
+}): GitHubRepoInfo | null {
+  try {
+    const repoPath = window.location.pathname.slice(1)
+    const [owner, name] = repoPath.split('/')
+
+    if (!owner || !name) {
+      console.warn('Unable to extract owner/name from URL:', window.location.pathname)
+      return null
+    }
+
+    const description = extractTextFromSelectors(DOM_SELECTORS.description)
+    const language = extractTextFromSelectors(DOM_SELECTORS.language)
+    const topics = extractTopics(DOM_SELECTORS.topics)
+    const stars = extractNumberFromSelectors(DOM_SELECTORS.stars)
+    const forks = extractNumberFromSelectors(DOM_SELECTORS.forks)
+    const license = extractTextFromSelectors(DOM_SELECTORS.license) || undefined
+    const readme = extractReadme(DOM_SELECTORS.readme, {
+      maxParagraphs: options?.maxReadmeParagraphs,
+      maxChars: options?.maxReadmeChars,
+    })
+
+    const repoInfo: GitHubRepoInfo = {
+      id: formatRepoId(owner, name),
+      name,
+      owner,
+      description,
+      language,
+      topics,
+      stars,
+      forks,
+      license,
+      readme,
+    }
+
+    logger.log('Extracted repo info:', {
+      ...repoInfo,
+      readme: readme ? `${readme.slice(0, 100)}...` : undefined,
+    })
+
+    return repoInfo
+  }
+  catch (error) {
+    logger.error('Failed to extract repository info from DOM:', error)
+    return null
+  }
 }

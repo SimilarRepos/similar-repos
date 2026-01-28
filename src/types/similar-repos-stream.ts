@@ -1,5 +1,7 @@
+import type { GitHubRepoInfo } from './github'
+
 export interface SimilarReposStreamRequest {
-  repoId: string
+  repoInfo: GitHubRepoInfo
   count: number
   excludedRepos?: string[]
 }

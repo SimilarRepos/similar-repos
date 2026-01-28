@@ -44,6 +44,7 @@ export default function PromptPage() {
           </div>
           <div className="text-xs text-muted-foreground">
             {i18n.t('options.prompt.customizePrompt')}
+            <br></br>
             {i18n.t('options.prompt.supportedVariables')}
             <div className="mt-1 space-y-1">
               <code className="px-1 py-0.5 bg-muted rounded text-xs">
@@ -61,6 +62,54 @@ export default function PromptPage() {
               -
               {' '}
               {i18n.t('options.prompt.repoCount')}
+              <br />
+              <code className="px-1 py-0.5 bg-muted rounded text-xs">
+                {'{repoDesc}'}
+              </code>
+              {' '}
+              -
+              {' '}
+              {i18n.t('options.prompt.repoDesc')}
+              <br />
+              <code className="px-1 py-0.5 bg-muted rounded text-xs">
+                {'{repoLanguage}'}
+              </code>
+              {' '}
+              -
+              {' '}
+              {i18n.t('options.prompt.repoLanguage')}
+              <br />
+              <code className="px-1 py-0.5 bg-muted rounded text-xs">
+                {'{repoTopics}'}
+              </code>
+              {' '}
+              -
+              {' '}
+              {i18n.t('options.prompt.repoTopics')}
+              <br />
+              <code className="px-1 py-0.5 bg-muted rounded text-xs">
+                {'{repoStars}'}
+              </code>
+              {' '}
+              -
+              {' '}
+              {i18n.t('options.prompt.repoStars')}
+              <br />
+              <code className="px-1 py-0.5 bg-muted rounded text-xs">
+                {'{repoForks}'}
+              </code>
+              {' '}
+              -
+              {' '}
+              {i18n.t('options.prompt.repoForks')}
+              <br />
+              <code className="px-1 py-0.5 bg-muted rounded text-xs">
+                {'{repoReadMe}'}
+              </code>
+              {' '}
+              -
+              {' '}
+              {i18n.t('options.prompt.repoReadMe')}
             </div>
           </div>
         </div>

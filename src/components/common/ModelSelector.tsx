@@ -39,8 +39,6 @@ export function ModelSelector({
     await setActiveModelId(actualId)
     const selectedModel = customModels.find(m => m.id === actualId)
     if (selectedModel?.displayName) {
-      // eslint-disable-next-line no-console
-      console.log('Switched to custom model:', selectedModel.displayName)
       onChange?.(selectedModel.provider, selectedModel.modelId)
     }
   }

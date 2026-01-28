@@ -46,7 +46,7 @@ export default defineConfig({
     ],
     browser_specific_settings: {
       gecko: {
-        id: 'similar-repos',
+        id: 'similar-repos@robby',
         strict_min_version: '88.0',
       },
     },

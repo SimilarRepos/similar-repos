@@ -1,5 +1,5 @@
 name: SimilarRepos
-extName: SimilarRepos - AI-Powered Repository Recommendations for GitHub
+extName: SimilarRepos - AI-Powered Repository Recommender for GitHub
 extDescription: Use the power of AI to automatically recommend similar and interesting repositories directly on any GitHub page you visit.
 
 navitems:
@@ -25,6 +25,12 @@ options:
     supportedVariables: 'Supported variables:'
     repoId: Repository name
     repoCount: Number of repositories to recommend
+    repoDesc: Repository description
+    repoLanguage: Primary programming language
+    repoTopics: Repository topics/tags
+    repoStars: Number of stars
+    repoForks: Number of forks
+    repoReadMe: README content preview
     placeholder: Enter custom prompt...
     resetToDefault: Reset to Default
     save: Save

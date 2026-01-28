@@ -15,7 +15,6 @@
       "@/*": ["./src/*"]
     },
     "resolveJsonModule": true,
-    "types": ["node"],
     "allowImportingTsExtensions": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,

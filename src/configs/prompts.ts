@@ -13,6 +13,16 @@ Relevance can be defined as:
 
 # Target Repository Information
 - **Repo Name:** {repoId}
+- **Description:** {repoDesc}
+- **Language:** {repoLanguage}
+- **Topics:** {repoTopics}
+- **Stars:** {repoStars}
+- **Forks:** {repoForks}
+- **README Preview:** {repoReadMe}
+
+Consider all the above information when making recommendations. Pay special attention to:
+- The topics/tags which indicate the repository's domain and functionality
+- The description and README content to understand the project's purpose
 
 # Excluded Repositories
 The following repositories have already been recommended and should not be included in your recommendations:

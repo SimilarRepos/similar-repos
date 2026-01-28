@@ -1,10 +1,8 @@
 import type { Browser } from '#imports'
-import type { SimilarReposResult } from '@/types/similar-repos'
 import type { SimilarReposStreamRequest, SimilarReposStreamResponse } from '@/types/similar-repos-stream'
 import type { TestConnResult } from '@/types/test-model'
 import { browser, defineBackground } from '#imports'
 import { EVENTS } from '@/configs/events'
-import { SimilarReposService } from '@/services/SimilarReposService'
 import { SimilarReposStreamService } from '@/services/SimilarReposStreamService'
 import { TestModelService } from '@/services/TestModelService'
 import { track } from '@/utils/events'
@@ -40,15 +38,6 @@ export default defineBackground(() => {
     }
   })
 
-  onMessage('similarRepos', async (message): Promise<SimilarReposResult> => {
-    const { repoId, count, excludedRepos } = message.data
-    const service = new SimilarReposService()
-    if (excludedRepos && excludedRepos.length > 0) {
-      return service.generate(repoId, count, excludedRepos)
-    }
-    return service.generate(repoId, count)
-  })
-
   onMessage('testModelConfig', async (message): Promise<TestConnResult> => {
     return new TestModelService().test(message.data)
   })
@@ -56,12 +45,12 @@ export default defineBackground(() => {
 
 export function listenSimilarReposStreamPort(port: Browser.runtime.Port) {
   port.onMessage.addListener(async (msg: SimilarReposStreamRequest) => {
-    logger.info('Starting similar repos stream for:', msg.repoId)
+    logger.info('Starting similar repos stream for:', msg.repoInfo.id)
 
     const service = new SimilarReposStreamService()
 
     try {
-      const generator = service.generate(msg.repoId, msg.count, msg.excludedRepos)
+      const generator = service.generate(msg.repoInfo, msg.count, msg.excludedRepos)
 
       for await (const item of generator) {
         const response: SimilarReposStreamResponse = {

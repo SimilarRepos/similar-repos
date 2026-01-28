@@ -12,8 +12,7 @@ import {
   areStringArraysEqual,
   convertToRepositories,
   extractRepoFromUrl,
-  formatRepoId,
-  getCurrentRepo,
+  extractRepoInfoFromDOM,
 } from '@/utils/github'
 import { logger } from '@/utils/logger'
 
@@ -55,11 +54,10 @@ export function useSimilarRepos(): UseSimilarReposResult {
     statsCacheRef.current.clear()
 
     try {
-      const currentRepo = getCurrentRepo()
-      if (currentRepo) {
-        const repoId = formatRepoId(currentRepo.owner, currentRepo.name)
-        setCurrentRepoId(repoId)
-        logger.log('Streaming similar repos for:', repoId)
+      const currentRepoInfo = extractRepoInfoFromDOM({ maxReadmeParagraphs: 3, maxReadmeChars: 1000 })
+      if (currentRepoInfo) {
+        setCurrentRepoId(currentRepoInfo.id)
+        logger.log('Streaming similar repos for:', currentRepoInfo.id)
 
         const limitedExcludedRepos
           = allRecommendedRepos.length > 100 ? allRecommendedRepos.slice(-100) : allRecommendedRepos
@@ -154,7 +152,7 @@ export function useSimilarRepos(): UseSimilarReposResult {
         })
 
         port.postMessage({
-          repoId,
+          repoInfo: currentRepoInfo,
           count: repoCount,
           excludedRepos: limitedExcludedRepos,
         })
