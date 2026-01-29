@@ -1,42 +1,40 @@
 # Similar Repos
 
-**Use the power of AI to automatically recommend similar and interesting repositories directly on any GitHub page you visit.**
-
+**A browser extension that use the power of AI to automatically recommend similar and interesting repositories directly on any GitHub page you visit.**
 
 https://github.com/user-attachments/assets/93c2625a-1cac-448c-9275-312a59656034
 
-
-## ✨ Features
+## Features
 
 - **Smart Discovery**: Automatically displays similar projects on the GitHub repository sidebar.
 - **Multi-Model Support**: Bring your own API key. Supports OpenAI, Anthropic, Google Gemini, DeepSeek, and Ollama (local).
 - **Fully Customizable**: Configure recommendation quantity and custom system prompts.
 - **Interactive**: Support for infinite refresh to generate new suggestions.
 - **Cross-Browser**: Compatible with Chrome, Edge, and Firefox.
-- **i18n**: English & Chinese support.
 
-## 🚀 Installation
+## Installation
 
 ### Chrome Web Store
 
-[Link to Store] _(Coming Soon)_
+Install the extension via the Chrome Web Store [<img src="https://www.google.com/chrome/static/images/chrome-logo.svg" width="24" />](https://chromewebstore.google.com/detail/phgdoclnoiokacipnhgaebaknfnjpfll)
+
+https://chromewebstore.google.com/detail/phgdoclnoiokacipnhgaebaknfnjpfll
 
 ### Manual Installation
 
-1. Download the latest release from [Releases].
-2. Unzip the file.
-3. Enable **"Developer mode"** in your browser's extension management page (`chrome://extensions`).
-4. Click **"Load unpacked"** and select the `dist` folder.
+1. Clone this repo and build on your local machine.
+2. Enable **"Developer mode"** in your browser's extension management page (`chrome://extensions`).
+3. Click **"Load unpacked"** and select the `dist` folder.
 
-## ⚙️ Usage
+## Usage
 
 1. Install the extension.
 2. Click the extension icon in the toolbar to open **Options**.
 3. Select your preferred **AI Provider** (e.g., OpenAI, DeepSeek) and enter your **API Key**.
-   > 🔒 **Privacy Note**: Your API Key is stored locally in your browser.
+   > **Privacy Note**: Your API Key is stored locally in your browser.
 4. Visit any public GitHub repository to see recommendations.
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Framework**: [WXT](https://wxt.dev/) + React
 - **Language**: TypeScript
@@ -45,7 +43,7 @@ https://github.com/user-attachments/assets/93c2625a-1cac-448c-9275-312a59656034
 - **AI SDK**: Vercel AI SDK
 - **Build Tool**: Vite
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 src/
@@ -64,7 +62,7 @@ src/
 └── utils/           # Helper functions
 ```
 
-## 💻 Development
+## Development
 
 ```bash
 # Install dependencies
@@ -80,6 +78,6 @@ pnpm build
 pnpm zip
 ```
 
-## 📄 License
+## License
 
-MIT License © 2026
+[MIT License](./LICENSE)
