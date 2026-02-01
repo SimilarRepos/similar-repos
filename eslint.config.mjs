@@ -4,7 +4,6 @@ const antfuConfig = {
   formatters: {
     css: true,
     html: true,
-    markdown: 'prettier',
   },
   rules: {
     'unused-imports/no-unused-imports': 'error',
@@ -21,14 +20,19 @@ function createConfig(additionalOptions = {}) {
 
 const config = createConfig({
   react: true,
-}).append({
-  rules: {
-    'react-refresh/only-export-components': 'off',
-    'react/no-context-provider': 'off',
-    'test/consistent-test-it': 'error',
-    'test/no-identical-title': 'error',
-    'test/prefer-hooks-on-top': 'error',
+}).append(
+  {
+    ignores: ['**/*.md'],
   },
-})
+  {
+    rules: {
+      'react-refresh/only-export-components': 'off',
+      'react/no-context-provider': 'off',
+      'test/consistent-test-it': 'error',
+      'test/no-identical-title': 'error',
+      'test/prefer-hooks-on-top': 'error',
+    },
+  },
+)
 
 export default config
