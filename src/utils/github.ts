@@ -39,6 +39,13 @@ const DOM_SELECTORS = {
     '.markdown-body',
     'article.markdown-body',
   ],
+  privateLabel: [
+    '.Label--private',
+    '.Label[data-label="private"]',
+    '[aria-label*="Private"]',
+    '.Label:has-text("Private")',
+    'span.Label.Label--attention:contains("Private")',
+  ],
 } as const
 
 function extractTextFromSelectors(selectors: readonly string[]): string {
@@ -243,6 +250,47 @@ export function convertToRepositories(
     forks: Number.isNaN(repo.froks) ? 0 : Number.parseInt(repo.froks),
     url: repo.url,
   }))
+}
+
+export function isPrivateRepo(): boolean {
+  try {
+    for (const selector of DOM_SELECTORS.privateLabel) {
+      try {
+        const element = document.querySelector(selector)
+        if (element) {
+          const text = element.textContent?.trim().toLowerCase()
+          if (text === 'private') {
+            return true
+          }
+        }
+      }
+      catch {
+        continue
+      }
+    }
+
+    const labels = document.querySelectorAll('.Label, [class*="Label"]')
+    for (const label of labels) {
+      const text = label.textContent?.trim().toLowerCase()
+      if (text === 'private') {
+        return true
+      }
+    }
+
+    const hasPublicLabel = Array.from(
+      document.querySelectorAll('.Label, [class*="Label"]'),
+    ).some(label => label.textContent?.trim().toLowerCase() === 'public')
+
+    if (hasPublicLabel) {
+      return false
+    }
+
+    return false
+  }
+  catch (error) {
+    logger.error('Failed to check if repository is private:', error)
+    return false
+  }
 }
 
 export function extractRepoInfoFromDOM(options?: {
